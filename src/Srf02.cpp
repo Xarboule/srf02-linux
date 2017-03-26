@@ -18,6 +18,9 @@ Srf02::Srf02(int bus, unsigned char address){
 
 int Srf02::writeValue(unsigned char value) {
 
+#ifdef DEBUG
+	cout << "DEBUG : writeValue : " << hex << value << endl;
+#endif
 	return i2c_write_value(I2CBus, I2CAddress, COMMAND_REG, value);
 }
 
@@ -28,12 +31,22 @@ unsigned char Srf02::get_i2c_register(unsigned char reg) {
 }
 
 int Srf02::refreshValue(){
+
+#ifdef DEBUG
+	cout << "DEBUG : refreshValue" << endl;
+#endif
+
 	this->writeValue(REFRESH_ORDER);
 	return 0;
 }
 
 int Srf02::readValue(){
+	#ifdef DEBUG
+	cout << "DEBUG : readValue" << endl;
+#endif
+usleep(2000000);
 	unsigned int LSB = this->get_i2c_register(VALUE_LSB);
+	usleep(2000000);
 	unsigned int MSB = this->get_i2c_register(VALUE_MSB);
 #ifdef DEBUG
 	cout << "DEBUG : MSB = " << hex << MSB << "  LSB = " << hex << LSB << endl;
