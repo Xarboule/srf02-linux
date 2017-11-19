@@ -30,6 +30,7 @@ class Srf02 {
 		int writeValue(unsigned char value);
 		int readValue();
 		int getValue();
+		int changeAddress(unsigned char newAddress);
 	};
 
 #endif

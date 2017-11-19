@@ -8,6 +8,7 @@
 using namespace std;
 
 
+
 int main (int argc, char **argv){
 
 	char optstring[] = "c"; //allowed options
@@ -36,18 +37,32 @@ int main (int argc, char **argv){
 	}
 	//printf("%s\n", argv[optind]);
 
-	char *old_addr, *new_addr;
+	unsigned char *old_addr, *new_addr;
+	int bus;
 
 	if (cflag) {
 		if (argv[optind] && argv[optind+1]){
-			old_addr = argv[optind];
-			new_addr = argv[optind+1];
+			bus = atoi(argv[optind]);
+			old_addr = reinterpret_cast<unsigned char *>(argv[optind+1]);
+			//*old_addr = (unsigned char) argv[optind+1];
+			new_addr = reinterpret_cast<unsigned char *>(argv[optind+2]);
+			//*new_addr = (unsigned char) argv[optind+2];
 		}
 		else {
-			cout << "Missing argument : srf02-utility -c old_addr new_addr" << endl;
+			cout << "Missing argument. Expected syntax : srf02-utility -c bus old_addr new_addr" << endl;
 			return -1;
 		}
-		cout << "Changing sensor ID from " << hex << old_addr << " to "<< hex << new_addr << endl;
+		cout << "Changing sensor ID from " << hex << old_addr << " to "<< hex << new_addr << " on bus " << bus << endl;
+
+		Srf02 *sensor = new Srf02(bus, *old_addr);
+		int check = sensor->changeAddress(*new_addr);
+		if (check) {
+			cout << "Done." << endl;
+		}
+		else {
+			cout << "FAILED : Error while changing the address." << endl;
+		}
+
 	}
 
 	return EXIT_SUCCESS;

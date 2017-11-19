@@ -40,3 +40,11 @@ int Srf02::convertValue(unsigned int MSB, unsigned int LSB){
 int Srf02::getValue(){
 	return this->value;
 }
+
+int Srf02::changeAddress(unsigned char newAddress){
+	cout << "Please disconnect all not concerned sensors from the I2C bus." << endl;
+	cout << "Press any key ton continue..." << endl;
+	cin.get();
+	cout << endl << "Changing adress from " << hex << I2CAddress << " to " << hex << newAddress << endl;
+	return 0;
+}
