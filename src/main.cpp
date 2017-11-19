@@ -1,8 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
-#include "Srf02.hpp"
 #include <unistd.h>
+#include "Srf02.hpp"
+
 
 using namespace std;
 
@@ -35,9 +36,17 @@ int main (int argc, char **argv){
 	}
 	//printf("%s\n", argv[optind]);
 
+	char *old_addr, *new_addr;
+
 	if (cflag) {
-		char *old_addr = argv[optind];
-		char *new_addr = argv[optind+1];
+		if (argv[optind] && argv[optind+1]){
+			old_addr = argv[optind];
+			new_addr = argv[optind+1];
+		}
+		else {
+			cout << "Missing argument : srf02-utility -c old_addr new_addr" << endl;
+			return -1;
+		}
 		cout << "Changing sensor ID from " << hex << old_addr << " to "<< hex << new_addr << endl;
 	}
 
