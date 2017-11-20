@@ -50,7 +50,6 @@ int main (int argc, char **argv){
 	else if (cflag) {
 		if (argv[optind] && argv[optind+1]){
 			bus = argv[optind];
-			int busI2C = open(bus, O_RDWR);
 			old_addr = reinterpret_cast<unsigned char *>(argv[optind+1]);
 			//*old_addr = (unsigned char) argv[optind+1];
 			new_addr = reinterpret_cast<unsigned char *>(argv[optind+2]);
@@ -61,8 +60,8 @@ int main (int argc, char **argv){
 			return -1;
 		}
 		cout << "Changing sensor ID from " << hex << old_addr << " to "<< hex << new_addr << " on bus " << bus << endl;
-
-		Srf02 *sensor = new Srf02(bus, *old_addr);
+		int busI2C = open(bus, O_RDWR);
+		Srf02 *sensor = new Srf02(busI2C, *old_addr);
 		int check = sensor->changeAddress(new_addr);
 		if (check) {
 			cout << "Done." << endl;
