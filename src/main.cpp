@@ -55,7 +55,7 @@ int main (int argc, char **argv){
 		cout << "Changing sensor ID from " << hex << old_addr << " to "<< hex << new_addr << " on bus " << bus << endl;
 
 		Srf02 *sensor = new Srf02(bus, *old_addr);
-		int check = sensor->changeAddress(*new_addr);
+		int check = sensor->changeAddress(new_addr);
 		if (check) {
 			cout << "Done." << endl;
 		}
