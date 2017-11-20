@@ -46,5 +46,11 @@ int Srf02::changeAddress(unsigned char *newAddress){
 	cout << "Press any key to continue..." << endl;
 	cin.get();
 	cout << endl << "Changing adress from " << hex << I2CAddress << " to " << hex << newAddress << endl;
+
+	i2c_write_value(I2CBus, I2CAddress, COMMAND_REG, 0xA0);
+	i2c_write_value(I2CBus, I2CAddress, COMMAND_REG, 0xAA);
+	i2c_write_value(I2CBus, I2CAddress, COMMAND_REG, 0xA5);
+	i2c_write_value(I2CBus, I2CAddress, COMMAND_REG, *newAddress);
+
 	return 0;
 }
