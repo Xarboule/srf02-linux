@@ -42,14 +42,15 @@ int main (int argc, char **argv){
 	//printf("%s\n", argv[optind]);
 
 	unsigned char *old_addr, *new_addr;
-	int bus;
+	char *bus;
 
 	if (cflag && vflag){
 		cout << "Too many arguments." << endl;
 	}
 	else if (cflag) {
 		if (argv[optind] && argv[optind+1]){
-			bus = atoi(argv[optind]);
+			bus = argv[optind];
+			int busI2C = open(bus, O_RDWR);
 			old_addr = reinterpret_cast<unsigned char *>(argv[optind+1]);
 			//*old_addr = (unsigned char) argv[optind+1];
 			new_addr = reinterpret_cast<unsigned char *>(argv[optind+2]);
@@ -71,7 +72,11 @@ int main (int argc, char **argv){
 		}
 }
 		else if (vflag){
-			Srf02 *sensor = new Srf02(bus, *old_addr);
+			bus = argv[optind];
+			int busI2C = open(bus, O_RDWR);
+			unsigned char *sensor_addr = reinterpret_cast<unsigned char *>(argv[optind+1]);
+
+			Srf02 *sensor = new Srf02(busI2C, *sensor_addr);
 			int distance = sensor->getValue();
 			cout << "Distance : " << distance << " cm" << endl;
 		}
