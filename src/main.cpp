@@ -11,9 +11,10 @@ using namespace std;
 
 int main (int argc, char **argv){
 
-	char optstring[] = "c"; //allowed options
+	char optstring[] = "cv"; //allowed options
 	int c;
-	int cflag = 0; //if -c option detected
+	int cflag = 0; // if -c option detected
+	int vflag = 0; // -v option
 
 	cout << "---- srf02 sensors utility ----" << endl;
 
@@ -22,6 +23,9 @@ int main (int argc, char **argv){
 		{
 			case 'c':
 				cflag = 1;
+				break;
+			case 'v':
+				vflag = 1;
 				break;
 			case '?':
 				if (optopt == 'c')
@@ -40,7 +44,10 @@ int main (int argc, char **argv){
 	unsigned char *old_addr, *new_addr;
 	int bus;
 
-	if (cflag) {
+	if (cflag && vflag){
+		cout << "Too many arguments." << endl;
+	}
+	else if (cflag) {
 		if (argv[optind] && argv[optind+1]){
 			bus = atoi(argv[optind]);
 			old_addr = reinterpret_cast<unsigned char *>(argv[optind+1]);
@@ -62,8 +69,13 @@ int main (int argc, char **argv){
 		else {
 			cout << "FAILED : Error while changing the address." << endl;
 		}
+}
+		else if (vflag){
+			Srf02 *sensor = new Srf02(bus, *old_addr);
+			int distance = sensor->getValue();
+			cout << "Distance : " << distance << " cm" << endl;
+		}
 
-	}
 
 	return EXIT_SUCCESS;
 
