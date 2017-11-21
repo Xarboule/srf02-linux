@@ -27,13 +27,16 @@ unsigned char Srf02::get_i2c_register(unsigned char reg) {
 
 int Srf02::readValue(){
 
+	unsigned int LSB = this->get_i2c_register(VALUE_LSB);
+	unsigned int MSB = this->get_i2c_register(VALUE_MSB);
 	this->value = convertValue(VALUE_MSB, VALUE_LSB);
 	return 0;
 }
 
+
 int Srf02::convertValue(unsigned int MSB, unsigned int LSB){
-	short temp = dataBuffer[MSB];
-	temp = (temp<<8) | dataBuffer[LSB];
+	short temp = MSB;
+	temp = (temp<<8) | LSB;
 	return temp;
 }
 
