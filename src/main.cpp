@@ -16,8 +16,6 @@ int main (int argc, char **argv){
 	int cflag = 0; // if -c option detected
 	int vflag = 0; // -v option
 
-	cout << "---- srf02 sensors utility ----" << endl;
-
 	while((c=getopt(argc, argv, optstring))!=-1){
 		switch (c)
 		{
@@ -76,6 +74,7 @@ int main (int argc, char **argv){
 			unsigned char *sensor_addr = reinterpret_cast<unsigned char *>(argv[optind+1]);
 
 			Srf02 *sensor = new Srf02(busI2C, *sensor_addr);
+			sensor->readValue();
 			int distance = sensor->getValue();
 			cout << "Distance : " << distance << " cm" << endl;
 		}
