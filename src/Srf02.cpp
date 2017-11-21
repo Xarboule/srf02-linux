@@ -5,6 +5,7 @@ using namespace std;
 #define VALUE_LSB 0x03
 #define VALUE_MSB 0x02
 #define COMMAND_REG 0x00
+#define REFRESH_ORDER 0x51
 
 #define MAX_BUF 64
 
@@ -25,8 +26,12 @@ unsigned char Srf02::get_i2c_register(unsigned char reg) {
 	return i2c_get_register(I2CBus, I2CAddress, reg);
 }
 
-int Srf02::readValue(){
+int Srf02::refreshValue(){
+	this->writeValue(REFRESH_ORDER);
+	return 0;
+}
 
+int Srf02::readValue(){
 	unsigned int LSB = this->get_i2c_register(VALUE_LSB);
 	unsigned int MSB = this->get_i2c_register(VALUE_MSB);
 	this->value = convertValue(VALUE_MSB, VALUE_LSB);
@@ -41,6 +46,7 @@ int Srf02::convertValue(unsigned int MSB, unsigned int LSB){
 }
 
 int Srf02::getValue(){
+	this->readValue();
 	return this->value;
 }
 
