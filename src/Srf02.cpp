@@ -39,14 +39,14 @@ int Srf02::readValue(){
 	cout << "DEBUG : MSB = " << hex << MSB << "  LSB = " << hex << LSB << endl;
 #endif
 
-	this->value = convertValue(VALUE_MSB, VALUE_LSB);
+	this->value = convertValue(MSB, LSB);
 	return 0;
 }
 
 
 int Srf02::convertValue(unsigned int MSB, unsigned int LSB){
-	short temp = dataBuffer[MSB];
-	temp = (temp<<8) | dataBuffer[LSB];
+	short temp = MSB;
+	temp = (temp<<8) | LSB;
 	return temp;
 }
 
