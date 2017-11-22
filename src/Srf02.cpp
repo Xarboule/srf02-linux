@@ -1,8 +1,8 @@
 #include "Srf02.hpp"
 
-#define DEBUG 1
+#define DEBUG
 
-#if DEBUG
+#ifdef DEBUG
 #include <iostream>
 #endif
 
@@ -40,7 +40,7 @@ int Srf02::refreshValue(){
 int Srf02::readValue(){
 	unsigned int LSB = this->get_i2c_register(VALUE_LSB);
 	unsigned int MSB = this->get_i2c_register(VALUE_MSB);
-#if DEBUG
+#ifdef DEBUG
 	cout << "DEBUG : MSB = " << hex << MSB << "  LSB = " << hex << LSB << endl;
 #endif
 
