@@ -16,6 +16,8 @@ int main (int argc, char **argv){
 		cout << " == DEBUG MODE == " << endl;
 	#endif
 
+	cout << "TEST" << endl;
+
 	char optstring[] = "cv"; //allowed options
 	int c;
 	int cflag = 0; // if -c option detected
