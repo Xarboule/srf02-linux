@@ -4,12 +4,17 @@
 #include <unistd.h>
 #include "Srf02.hpp"
 
+#define DEBUG
 
 using namespace std;
 
 
 
 int main (int argc, char **argv){
+
+	#ifdef DEBUG
+		cout << " == DEBUG MODE == " << endl;
+	#endif
 
 	char optstring[] = "cv"; //allowed options
 	int c;

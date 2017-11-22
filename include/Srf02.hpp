@@ -12,6 +12,10 @@
 #include <iostream>
 #include "i2c-sensor.hpp"
 
+#ifdef DEBUG
+#include <iostream>
+#endif
+
 
 
 class Srf02 {

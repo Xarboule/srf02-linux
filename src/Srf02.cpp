@@ -1,10 +1,5 @@
 #include "Srf02.hpp"
 
-#define DEBUG
-
-#ifdef DEBUG
-#include <iostream>
-#endif
 
 using namespace std;
 
