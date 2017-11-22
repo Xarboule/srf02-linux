@@ -12,6 +12,8 @@
 #include <iostream>
 #include "i2c-sensor.hpp"
 
+#define DEBUG
+
 #ifdef DEBUG
 #include <iostream>
 #endif
