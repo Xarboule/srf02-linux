@@ -45,8 +45,8 @@ int Srf02::readValue(){
 
 
 int Srf02::convertValue(unsigned int MSB, unsigned int LSB){
-	short temp = MSB;
-	temp = (temp<<8) | LSB;
+	short temp = dataBuffer[MSB];
+	temp = (temp<<8) | dataBuffer[LSB];
 	return temp;
 }
 
