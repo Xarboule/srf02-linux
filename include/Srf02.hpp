@@ -28,6 +28,7 @@ class Srf02 {
 
 		unsigned char get_i2c_register(unsigned char reg);
 		int writeValue(unsigned char value);
+		int refreshValue();
 		int readValue();
 		int getValue();
 		int changeAddress(unsigned char *newAddress);
