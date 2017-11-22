@@ -79,6 +79,10 @@ int main (int argc, char **argv){
 			unsigned char *sensor_addr = reinterpret_cast<unsigned char *>(argv[optind+1]);
 
 			Srf02 *sensor = new Srf02(busI2C, *sensor_addr);
+
+			sensor->refreshValue();
+			usleep(20000); // Waiting for the sensor
+
 			if(sensor->readValue()){
 				cout << "Error while reading the value" << endl;
 			}
