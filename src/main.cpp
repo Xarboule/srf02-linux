@@ -74,9 +74,13 @@ int main (int argc, char **argv){
 			unsigned char *sensor_addr = reinterpret_cast<unsigned char *>(argv[optind+1]);
 
 			Srf02 *sensor = new Srf02(busI2C, *sensor_addr);
-			sensor->readValue();
-			int distance = sensor->getValue();
-			cout << "Distance : " << distance << " cm" << endl;
+			if(sensor->readValue()){
+				cout << "Error while reading the value" << endl;
+			}
+			else {
+				int distance = sensor->getValue();
+				cout << "Distance : " << distance << " cm" << endl;
+			}
 		}
 
 
