@@ -16,10 +16,11 @@ int main (int argc, char **argv){
 		cout << " == DEBUG MODE == " << endl;
 	#endif
 
-	char optstring[] = "cv"; //allowed options
+	char optstring[] = "cvr"; //allowed options
 	int c;
 	int cflag = 0; // if -c option detected
 	int vflag = 0; // -v option
+	int rflag = 0;
 
 	while((c=getopt(argc, argv, optstring))!=-1){
 		switch (c)
@@ -29,6 +30,9 @@ int main (int argc, char **argv){
 				break;
 			case 'v':
 				vflag = 1;
+				break;
+			case 'r':
+				rflag = 1;
 				break;
 			case '?':
 				if (optopt == 'c')
@@ -73,6 +77,29 @@ int main (int argc, char **argv){
 			cout << "FAILED : Error while changing the address." << endl;
 		}
 }
+
+		else if(rflag){
+
+			if (argv[optind] && argv[optind+1]){
+				bus = argv[optind];
+				old_addr = reinterpret_cast<unsigned char *>(argv[optind+1]);
+				//*old_addr = (unsigned char) argv[optind+1];
+				new_addr = reinterpret_cast<unsigned char *>(argv[optind+2]);
+				//*new_addr = (unsigned char) argv[optind+2];
+			}
+			else {
+				cout << "Missing argument. Expected syntax : srf02-utility -c bus old_addr new_addr" << endl;
+				return -1;
+			}
+
+			int busI2C = open(bus, O_RDWR);
+			Srf02 *sensor = new Srf02(busI2C, *old_addr);
+
+			cout << "refresh sensor value..." << endl;
+			sensor->refreshValue();
+
+
+		}
 		else if (vflag){
 			bus = argv[optind];
 			int busI2C = open(bus, O_RDWR);
@@ -83,7 +110,7 @@ int main (int argc, char **argv){
 			sensor->refreshValue();
 			usleep(20000); // Waiting for the sensor
 
-			if(sensor->readValue()){
+			if(!(sensor->readValue())){
 				cout << "Error while reading the value" << endl;
 			}
 			else {
