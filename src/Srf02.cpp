@@ -3,8 +3,8 @@
 
 using namespace std;
 
-#define VALUE_LSB 0x03
-#define VALUE_MSB 0x02
+#define VALUE_LSB 3
+#define VALUE_MSB 2
 #define COMMAND_REG 0x00
 #define REFRESH_ORDER 0x51
 
@@ -44,12 +44,12 @@ int Srf02::readValue(){
 	#ifdef DEBUG
 	cout << "DEBUG : readValue" << endl;
 #endif
-usleep(2000000);
+usleep(200000);
 	unsigned int LSB = this->get_i2c_register(VALUE_LSB);
-	usleep(2000000);
-	unsigned int MSB = this->get_i2c_register(VALUE_MSB);
+	//usleep(200000);
+	//unsigned int MSB = this->get_i2c_register(VALUE_MSB);
 #ifdef DEBUG
-	cout << "DEBUG : MSB = " << hex << MSB << "  LSB = " << hex << LSB << endl;
+	cout << "LSB = " << hex << LSB << endl;
 #endif
 
 	this->value = convertValue(MSB, LSB);
