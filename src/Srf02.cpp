@@ -46,8 +46,8 @@ int Srf02::readValue(){
 #endif
 usleep(200000);
 	unsigned int LSB = this->get_i2c_register(VALUE_LSB);
-	//usleep(200000);
-	//unsigned int MSB = this->get_i2c_register(VALUE_MSB);
+	usleep(200000);
+	unsigned int MSB = this->get_i2c_register(VALUE_MSB);
 #ifdef DEBUG
 	cout << "LSB = " << hex << LSB << endl;
 #endif
